@@ -6,6 +6,10 @@
 #include <vector>
 #include <time.h>
 #include <cmath>
+#include <algorithm>
+#include <string>
+
+using namespace std;
 
 double factorial(int number)
 {
@@ -60,29 +64,18 @@ int experiment(int N, int M, int r)
     }
 
     return n;
-    /*
-    for (int i = 0; i < u_i_norm.size(); i++)
+}
+
+std::string type_SystemString_to_String(System::String^ text_syst)
+{
+    char cStr[50] = { 0 };
+    if (text_syst->Length < sizeof(cStr))
     {
-        double sum_p = 0;
-        int k = 0;
-
-        while (k < r + 1 || sum_p != 1)
-        {
-            if (u_i_norm[i] >= sum_p)
-            {
-                sum_p = sum_p + p_i[k];
-
-                if (u_i_norm[i] < sum_p)
-                {
-                    n_i[k]++;
-                    break;
-                }
-
-                k++;
-            }
-        }
+        sprintf(cStr, "%s", text_syst);
     }
-    */
+    std::string text_str(cStr);
+
+    return text_str;
 }
 
 namespace Lab1
@@ -95,24 +88,17 @@ namespace Lab1
     using namespace System::Data;
     using namespace System::Drawing;
 
-    /// <summary>
-    /// Сводка для MyForm
-    /// </summary>
     public ref class MyForm : public System::Windows::Forms::Form
     {
+    public: int count_tap = 0;
+
     public:
         MyForm(void)
         {
             InitializeComponent();
-            //
-            //TODO: добавьте код конструктора
-            //
         }
 
     protected:
-        /// <summary>
-        /// Освободить все используемые ресурсы.
-        /// </summary>
         ~MyForm()
         {
             if (components)
@@ -120,6 +106,8 @@ namespace Lab1
                 delete components;
             }
         }
+
+    private: bool button1_check = false;
 
     protected:
     private: System::Windows::Forms::Button^ button2;
@@ -150,6 +138,15 @@ namespace Lab1
     private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart1;
     private: System::Windows::Forms::PictureBox^ pictureBox3;
     private: System::Windows::Forms::Label^ label7;
+    private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart2;
+    private: System::Windows::Forms::DataVisualization::Charting::Chart^ chart3;
+    private: System::Windows::Forms::DataGridView^ dataGridView4;
+    private: System::Windows::Forms::Label^ label8;
+    private: System::Windows::Forms::TextBox^ textBox5;
+    private: System::Windows::Forms::Label^ label9;
+    private: System::Windows::Forms::TextBox^ textBox6;
+    private: System::Windows::Forms::Button^ button1;
+    private: System::Windows::Forms::DataGridView^ dataGridView5;
 
 
 
@@ -157,11 +154,9 @@ namespace Lab1
 
 
 
-    private:
-        /// <summary>
-        /// Обязательная переменная конструктора.
-        /// </summary>
-        System::ComponentModel::Container^ components;
+
+
+    private:System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
         /// <summary>
@@ -175,6 +170,12 @@ namespace Lab1
             System::Windows::Forms::DataVisualization::Charting::Legend^ legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
             System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
             System::Windows::Forms::DataVisualization::Charting::Series^ series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+            System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea2 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+            System::Windows::Forms::DataVisualization::Charting::Legend^ legend2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+            System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+            System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea3 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+            System::Windows::Forms::DataVisualization::Charting::Legend^ legend3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+            System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
             this->button2 = (gcnew System::Windows::Forms::Button());
             this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
             this->textBox1 = (gcnew System::Windows::Forms::TextBox());
@@ -202,6 +203,15 @@ namespace Lab1
             this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
             this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
             this->label7 = (gcnew System::Windows::Forms::Label());
+            this->chart2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+            this->chart3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+            this->dataGridView4 = (gcnew System::Windows::Forms::DataGridView());
+            this->label8 = (gcnew System::Windows::Forms::Label());
+            this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+            this->label9 = (gcnew System::Windows::Forms::Label());
+            this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+            this->button1 = (gcnew System::Windows::Forms::Button());
+            this->dataGridView5 = (gcnew System::Windows::Forms::DataGridView());
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -209,6 +219,10 @@ namespace Lab1
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView3))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart2))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart3))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView4))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView5))->BeginInit();
             this->SuspendLayout();
             // 
             // button2
@@ -288,7 +302,7 @@ namespace Lab1
             this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
             this->dataGridView2->Location = System::Drawing::Point(12, 195);
             this->dataGridView2->Name = L"dataGridView2";
-            this->dataGridView2->Size = System::Drawing::Size(733, 124);
+            this->dataGridView2->Size = System::Drawing::Size(830, 124);
             this->dataGridView2->TabIndex = 10;
             this->dataGridView2->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView2_CellContentClick);
             // 
@@ -397,7 +411,7 @@ namespace Lab1
             this->dataGridView3->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
             this->dataGridView3->Location = System::Drawing::Point(12, 404);
             this->dataGridView3->Name = L"dataGridView3";
-            this->dataGridView3->Size = System::Drawing::Size(733, 150);
+            this->dataGridView3->Size = System::Drawing::Size(830, 150);
             this->dataGridView3->TabIndex = 18;
             this->dataGridView3->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView3_CellContentClick_1);
             // 
@@ -405,25 +419,26 @@ namespace Lab1
             // 
             chartArea1->Name = L"ChartArea1";
             this->chart1->ChartAreas->Add(chartArea1);
+            this->chart1->Cursor = System::Windows::Forms::Cursors::Default;
             legend1->Name = L"Legend1";
             this->chart1->Legends->Add(legend1);
-            this->chart1->Location = System::Drawing::Point(874, 195);
+            this->chart1->Location = System::Drawing::Point(591, 636);
             this->chart1->Name = L"chart1";
             this->chart1->Palette = System::Windows::Forms::DataVisualization::Charting::ChartColorPalette::Bright;
             series1->BorderWidth = 2;
             series1->ChartArea = L"ChartArea1";
-            series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
+            series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::StepLine;
             series1->LabelBorderWidth = 5;
             series1->Legend = L"Legend1";
             series1->Name = L"Fη(x)";
             series2->ChartArea = L"ChartArea1";
-            series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
+            series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::StepLine;
             series2->LabelBorderWidth = 30;
             series2->Legend = L"Legend1";
             series2->Name = L"Fη(x)^";
             this->chart1->Series->Add(series1);
             this->chart1->Series->Add(series2);
-            this->chart1->Size = System::Drawing::Size(419, 388);
+            this->chart1->Size = System::Drawing::Size(251, 230);
             this->chart1->TabIndex = 19;
             this->chart1->Text = L"chart1";
             this->chart1->Click += gcnew System::EventHandler(this, &MyForm::chart1_Click);
@@ -447,11 +462,125 @@ namespace Lab1
             this->label7->TabIndex = 21;
             this->label7->Click += gcnew System::EventHandler(this, &MyForm::label7_Click);
             // 
+            // chart2
+            // 
+            chartArea2->Name = L"ChartArea1";
+            this->chart2->ChartAreas->Add(chartArea2);
+            this->chart2->Cursor = System::Windows::Forms::Cursors::Default;
+            legend2->Name = L"Legend1";
+            this->chart2->Legends->Add(legend2);
+            this->chart2->Location = System::Drawing::Point(12, 636);
+            this->chart2->Name = L"chart2";
+            this->chart2->Palette = System::Windows::Forms::DataVisualization::Charting::ChartColorPalette::Bright;
+            series3->BorderWidth = 2;
+            series3->ChartArea = L"ChartArea1";
+            series3->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::StepLine;
+            series3->LabelBorderWidth = 5;
+            series3->Legend = L"Legend1";
+            series3->Name = L"Fη(x)";
+            this->chart2->Series->Add(series3);
+            this->chart2->Size = System::Drawing::Size(251, 230);
+            this->chart2->TabIndex = 22;
+            this->chart2->Text = L"chart2";
+            this->chart2->Click += gcnew System::EventHandler(this, &MyForm::chart2_Click);
+            // 
+            // chart3
+            // 
+            chartArea3->Name = L"ChartArea1";
+            this->chart3->ChartAreas->Add(chartArea3);
+            this->chart3->Cursor = System::Windows::Forms::Cursors::Default;
+            legend3->Name = L"Legend1";
+            this->chart3->Legends->Add(legend3);
+            this->chart3->Location = System::Drawing::Point(296, 636);
+            this->chart3->Name = L"chart3";
+            series4->ChartArea = L"ChartArea1";
+            series4->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::StepLine;
+            series4->LabelBorderWidth = 30;
+            series4->Legend = L"Legend1";
+            series4->Name = L"Fη(x)^";
+            this->chart3->Series->Add(series4);
+            this->chart3->Size = System::Drawing::Size(251, 230);
+            this->chart3->TabIndex = 23;
+            this->chart3->Text = L"chart3";
+            // 
+            // dataGridView4
+            // 
+            this->dataGridView4->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+            this->dataGridView4->Location = System::Drawing::Point(12, 886);
+            this->dataGridView4->Name = L"dataGridView4";
+            this->dataGridView4->Size = System::Drawing::Size(535, 106);
+            this->dataGridView4->TabIndex = 24;
+            this->dataGridView4->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView4_CellContentClick);
+            // 
+            // label8
+            // 
+            this->label8->AutoSize = true;
+            this->label8->Location = System::Drawing::Point(1073, 572);
+            this->label8->Name = L"label8";
+            this->label8->Size = System::Drawing::Size(78, 13);
+            this->label8->TabIndex = 25;
+            this->label8->Text = L"k интервалов ";
+            // 
+            // textBox5
+            // 
+            this->textBox5->Location = System::Drawing::Point(1076, 588);
+            this->textBox5->Name = L"textBox5";
+            this->textBox5->Size = System::Drawing::Size(118, 20);
+            this->textBox5->TabIndex = 26;
+            this->textBox5->Text = L"3";
+            this->textBox5->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox5_TextChanged);
+            // 
+            // label9
+            // 
+            this->label9->AutoSize = true;
+            this->label9->Location = System::Drawing::Point(1073, 623);
+            this->label9->Name = L"label9";
+            this->label9->Size = System::Drawing::Size(65, 13);
+            this->label9->TabIndex = 27;
+            this->label9->Text = L"Значения zi";
+            // 
+            // textBox6
+            // 
+            this->textBox6->Location = System::Drawing::Point(1076, 639);
+            this->textBox6->Name = L"textBox6";
+            this->textBox6->Size = System::Drawing::Size(118, 20);
+            this->textBox6->TabIndex = 28;
+            this->textBox6->Text = L"1;2;5;";
+            this->textBox6->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox6_TextChanged);
+            // 
+            // button1
+            // 
+            this->button1->Location = System::Drawing::Point(1075, 665);
+            this->button1->Name = L"button1";
+            this->button1->Size = System::Drawing::Size(119, 19);
+            this->button1->TabIndex = 29;
+            this->button1->Text = L"Ввести";
+            this->button1->UseVisualStyleBackColor = true;
+            this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+            // 
+            // dataGridView5
+            // 
+            this->dataGridView5->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+            this->dataGridView5->Location = System::Drawing::Point(1076, 704);
+            this->dataGridView5->Name = L"dataGridView5";
+            this->dataGridView5->Size = System::Drawing::Size(535, 149);
+            this->dataGridView5->TabIndex = 30;
+            this->dataGridView5->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView5_CellContentClick);
+            // 
             // MyForm
             // 
             this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
             this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
             this->ClientSize = System::Drawing::Size(1924, 1061);
+            this->Controls->Add(this->dataGridView5);
+            this->Controls->Add(this->button1);
+            this->Controls->Add(this->textBox6);
+            this->Controls->Add(this->label9);
+            this->Controls->Add(this->textBox5);
+            this->Controls->Add(this->label8);
+            this->Controls->Add(this->dataGridView4);
+            this->Controls->Add(this->chart3);
+            this->Controls->Add(this->chart2);
             this->Controls->Add(this->label7);
             this->Controls->Add(this->pictureBox3);
             this->Controls->Add(this->chart1);
@@ -481,6 +610,10 @@ namespace Lab1
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView3))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart2))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart3))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView4))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView5))->EndInit();
             this->ResumeLayout(false);
             this->PerformLayout();
 
@@ -497,6 +630,23 @@ namespace Lab1
         int count_experement = Convert::ToInt32(textBox4->Text);
         int min_y_i = std::max(0, r - N + M);
         int max_y_i = std::min(M, r);
+
+        //графики        
+        using namespace System::Windows::Forms::DataVisualization::Charting;
+        //chart 1
+        Series^ series_F_theory_1 = chart1->Series[0];
+        series_F_theory_1->BorderWidth = 2;
+        Series^ series_F_selection_1 = chart1->Series[1];
+        series_F_selection_1->BorderWidth = 2;
+        chart1->Series[0]->Points->Clear();
+        chart1->Series[1]->Points->Clear();
+        //chart 2
+        Series^ series_F_theory_2 = chart2->Series[0];
+        series_F_theory_2->BorderWidth = 2;
+        Series^ series_F_selection_3 = chart3->Series[0];
+        series_F_selection_3->BorderWidth = 2;
+        chart2->Series[0]->Points->Clear();
+        chart3->Series[0]->Points->Clear();
 
         //создание таблицы1 (Лаб1)
         dataGridView2->ColumnCount = max_y_i - min_y_i + 2;
@@ -552,12 +702,35 @@ namespace Lab1
         double differenceD_selective_average_And_D_selective_average = 0.0; //дисперсия выборочного среднего
         double Me_selection = 0.0; //Медиана выборки
         double scope_selection = 0.0; //Размах выборки
-        std::vector<double> F_theory; //Размах выборки
+        std::vector<double> x_i;
+        std::vector<double> F_theory; //Функц распределения (теоретич)
+        std::vector<double> F_selection; //Функц распределения (теоретич)
         std::vector<double> p_i;
         double max_difference_frequency_and_pi = 0;
+        //переменные л3
+        /*
+        System::String^ values_z_str = textBox6->Text;
+        int size_values_z_str = 0;
+        std::vector<int> values_z;
+        int tmp_z = 0;
+        string value = "";
+        while (true)
+        {
+            //string tmp = size_values_z_str[tmp_z];
+            //value.insert(0, );
+
+
+            if(values_z_str[tmp_z] == ';')
+            {
+                tmp_z++;
+            }
+
+
+        }
+        */
 
         for (size_t i = 1; i < dataGridView2->ColumnCount; i++)
-        {   
+        {
             //y_i т1,л1, т3,л2
             y_i.push_back(min_y_i + i - 1);
             dataGridView2->Rows[1]->Cells[i]->Value = min_y_i + i - 1;
@@ -568,7 +741,7 @@ namespace Lab1
             dataGridView2->Rows[0]->Cells[i]->Value = i - 1;
             dataGridView3->Rows[0]->Cells[i]->Value = i - 1;
         }
-        
+
         size_t k = 1;
         for (size_t i = min_y_i; i <= max_y_i; i++)
         {
@@ -580,6 +753,7 @@ namespace Lab1
             //создание n_i vec для т1,л1
             n_i.push_back(0);
         }
+
         double tmp_math_waitng_in_pow2 = 0.0;
         for (size_t i = 0; i < p_i.size(); i++)
         {
@@ -589,26 +763,30 @@ namespace Lab1
             //Мат.ожидание(с.в. ^ 2)
             tmp_math_waitng_in_pow2 += p_i[i] * y_i[i] * y_i[i];
         }
-        //Дисперсия:
-        D_dispersion = tmp_math_waitng_in_pow2 - E_math_waiting * E_math_waiting;
         //Заполнение мат ожидания т2,л2:
         dataGridView1->Rows[0]->Cells[0]->Value = E_math_waiting;
+
+        //Дисперсия:
+        D_dispersion = tmp_math_waitng_in_pow2 - E_math_waiting * E_math_waiting;
         //Заполнение дисперсии т2,л2:
         dataGridView1->Rows[0]->Cells[3]->Value = D_dispersion;
-        //заполнение vec n_i для табл1 (лаб1)
+
+        //заполнение vec n_i для т1,л1
         for (size_t i = 0; i < count_experement; i++)
         {
             int count_burned_lamps_in_experiment = experiment(N, M, r);
+            x_i.push_back(count_burned_lamps_in_experiment);
             k = 0;
-            for (size_t i = min_y_i; i <= max_y_i; i++)
+            for (size_t j = min_y_i; j <= max_y_i; j++)
             {
-                if (count_burned_lamps_in_experiment == i)
+                if (count_burned_lamps_in_experiment == j)
                 {
                     n_i[k]++;
                 }
                 k++;
             }
         }
+
         //заполнение vec n_i_norm для т1,л1
         for (size_t i = 0; i < n_i.size(); i++)
         {
@@ -617,100 +795,119 @@ namespace Lab1
         for (size_t i = 1; i < dataGridView2->ColumnCount; i++)
         {
             //заполнение строками n_i и n_i_norm т1,л1 и т3,л2 
-            dataGridView2->Rows[2]->Cells[i]->Value = n_i[i-1];
+            dataGridView2->Rows[2]->Cells[i]->Value = n_i[i - 1];
             dataGridView2->Rows[3]->Cells[i]->Value = n_i_norm[i - 1];
             dataGridView3->Rows[3]->Cells[i]->Value = n_i_norm[i - 1];
 
             //|n_i_norm - p_i| т3,л2
-            dataGridView3->Rows[4]->Cells[i]->Value = std::abs(n_i_norm[i - 1] - p_i[i-1]);
+            dataGridView3->Rows[4]->Cells[i]->Value = std::abs(n_i_norm[i - 1] - p_i[i - 1]);
         }
+        
         //Выборочное среднее (мат.ож из эксперимента)
-        for (size_t i = 0; i < y_i.size(); i++)
+        for (size_t i = 0; i < n_i.size(); i++)
         {
-            x_selective_average += y_i[i];
+            x_selective_average += n_i[i] * y_i[i];
         }
-        x_selective_average /= y_i.size();
+        x_selective_average = x_selective_average / (count_experement);
         //Заполнение выборочного среднего (мат.ож из эксперимента) т2,л2
         dataGridView1->Rows[0]->Cells[1]->Value = x_selective_average;
+       
         //Разница Мат ожидания и выборочного среднего
         difference_E_math_waiting_And_X_sample_mean = abs(E_math_waiting - x_selective_average);
         //Заполнение разницы мат ожидания и выборочного среднего т2,л2
         dataGridView1->Rows[0]->Cells[2]->Value = difference_E_math_waiting_And_X_sample_mean;
+        
         //Выборочная дисперсия (дисперсия из эксперимента)
         for (size_t i = 0; i < y_i.size(); i++)
         {
-            D_selective_average += (y_i[i] - x_selective_average) * (y_i[i] - x_selective_average);
+            D_selective_average += n_i[i] * (y_i[i] - x_selective_average) * (y_i[i] - x_selective_average);
         }
-        D_selective_average = D_selective_average / y_i.size();
+        D_selective_average = D_selective_average / count_experement;
         dataGridView1->Rows[0]->Cells[4]->Value = D_selective_average;
+        
         //разница дисперсии и выборочной дисперсии
         differenceD_selective_average_And_D_selective_average = abs(D_dispersion - D_selective_average);
-        //Заполнение дисперсии т2,л2
+        //Заполнение разницы дисперсии и выборочной дисперсии т2,л2
         dataGridView1->Rows[0]->Cells[5]->Value = differenceD_selective_average_And_D_selective_average;
+        
         //Размах выборки
-        scope_selection = y_i[y_i.size() - 1] - y_i[0];
+        sort(x_i.begin(), x_i.end());
+        scope_selection = x_i[x_i.size() - 1] - x_i[0];
         //Заполнение Размаха выборки
         dataGridView1->Rows[0]->Cells[7]->Value = scope_selection;
+        
         //Медиана выборки:
         int tmp_k = 0.0;
-        tmp_k = y_i.size() / 2;
-        if(y_i.size() % 2 == 1)
+        tmp_k = count_experement / 2;
+        if (count_experement % 2 == 1)
         {
-            Me_selection = y_i[tmp_k + 1 - 1];
+            Me_selection = x_i[tmp_k + 1 - 1];
         }
         else
         {
-            Me_selection = double((y_i[tmp_k - 1] + y_i[tmp_k + 1 - 1]))/2;
+            Me_selection = double((x_i[tmp_k - 1] + x_i[tmp_k + 1 - 1])) / 2;
         }
         //Заполнение Медианы выборки
         dataGridView1->Rows[0]->Cells[6]->Value = Me_selection;
-       
-        //F_theory.push_back()
-        using namespace System::Windows::Forms::DataVisualization::Charting;
-        Series^ series_F_theory = chart1->Series[0];
-        series_F_theory->BorderWidth = 4;
-        Series^ series12 = chart1->Series[1];
-        series12->BorderWidth = 4;
-        //chart1->Series[0]->Points->Clear();
-        //chart1->Series[1]->Points->Clear();
 
-        
+        //Функция распределения (теоретич)
         double tmp_p = 0.0;
-        F_theory.push_back(0);
+        F_theory.push_back(0.0);
         for (double i = 0; i < p_i.size(); i++)
         {
             tmp_p += p_i[i];
             F_theory.push_back(tmp_p);
         }
-
-        for (double i = 0; i < p_i.size(); i++)
+        //Отрисовка функции распределения (теоретич)
+        for (double i = 0; i < F_theory.size(); i++)
         {
-            series_F_theory->Points->AddXY(i, F_theory[i]);
-            series_F_theory->Points->AddXY(i+1, F_theory[i]);
-        }
-       
+            series_F_theory_1->Points->AddXY(i - 1, F_theory[i]);
+            series_F_theory_1->Points->AddXY(i, F_theory[i]);
 
-        /*
-        int z = 0;
-        double x = double(int(y_i[0]) - 1);
-        while (F_theory[z] != 1 && z < F_theory.size())
+            series_F_theory_2->Points->AddXY(i - 1, F_theory[i]);
+            series_F_theory_2->Points->AddXY(i, F_theory[i]);
+        }
+
+        //Функция распределения (выборка)
+        double tmp_n_norm = 0.0;
+        F_selection.push_back(0.0);
+        for (int i = 0; i < n_i_norm.size(); i++)
         {
-            for(int i = 0; i < y_i.size(); i++)
-            {
-                if(x <= y_i[i])
-                {
-                    series_F_theory->Points->AddXY(x, F_theory[z]);
-                    x += 0.2;
-                }
-                else
-                {
-                    z++;
-                    break;
-                }
-            }
+            tmp_n_norm += n_i_norm[i];
+            F_selection.push_back(tmp_n_norm);
         }
-        */
+        for (int i = 0; i < F_selection.size(); i++)
+        {
+            series_F_selection_1->Points->AddXY(i - 1, F_selection[i]);
+            series_F_selection_1->Points->AddXY(i, F_selection[i]);
 
+            series_F_selection_3->Points->AddXY(i - 1, F_selection[i]);
+            series_F_selection_3->Points->AddXY(i, F_selection[i]);
+        }
+
+        //создание табл4 (л2)
+        dataGridView4->RowCount = 3;
+        dataGridView4->TopLeftHeaderCell->Value = "F";
+        dataGridView4->ColumnCount = F_theory.size();
+        dataGridView4->Rows[0]->Cells[0]->Value = "F_theory";
+        dataGridView4->Rows[1]->Cells[0]->Value = "F_selection";
+        dataGridView4->Rows[2]->Cells[0]->Value = "difference";
+
+        for (int i = 1; i < F_theory.size(); i++)
+        {
+            dataGridView4->Columns[i]->Width = 70;
+            dataGridView4->Rows[0]->Cells[i]->Value = F_theory[i];
+            dataGridView4->Rows[1]->Cells[i]->Value = F_selection[i];
+            dataGridView4->Rows[2]->Cells[i]->Value = abs(F_selection[i] - F_theory[i]);
+        }
+        
+        for (int i = 0; i < F_theory.size(); i++)
+        {
+            F_theory.pop_back();
+            F_selection.pop_back();
+        }
+
+        //Максимум от разности частоты и вероятности
         double tmp_max = 0;
         for (int i = 0; i < p_i.size(); i++)
         {
@@ -718,12 +915,108 @@ namespace Lab1
             if (max_difference_frequency_and_pi < tmp_max)
             {
                 max_difference_frequency_and_pi = tmp_max;
-            }    
+            }
         }
 
         label7->Text = max_difference_frequency_and_pi.ToString();
+        int k_count_intervals = Convert::ToInt32(textBox5->Text);
+        std::vector<int> z_value_i;
+        int checked_count_click = 0;
+        //создание табл5 (л3)
+        dataGridView5->RowCount = 5;
+        dataGridView5->ColumnCount = k_count_intervals + 2;
+        dataGridView5->Rows[0]->Cells[0]->Value = "k";
+        dataGridView5->Rows[1]->Cells[0]->Value = "intervals";
+        dataGridView5->Rows[2]->Cells[0]->Value = "n_new_for_intervals";
+        dataGridView5->Rows[3]->Cells[0]->Value = "q_j";
+        dataGridView5->Rows[4]->Cells[0]->Value = "R0";
+        for (int i = 0; i < k_count_intervals  +1; i++)
+        {
+            dataGridView5->Columns[i]->Width = 70;
+        }
+
+        String^ tmp_text;
+        string cur_value_str = "";
+        if (button1_check)
+        {
+            tmp_text = textBox6->Text;
+            std::string text_str = type_SystemString_to_String(tmp_text);
+
+            for (int i = 0; i < text_str.size(); i++)
+            {
+                while (text_str[i] != ';')
+                {
+                    cur_value_str += text_str[i];
+                    i++;
+                }
+
+                z_value_i.push_back(std::stoi(cur_value_str));
+                cur_value_str = "";
+            }
+             
+            //count_tap++;
+            //dataGridView5->Rows[1]->Cells[count_tap]->Value = z_value_i[0];
+        }
+
+        std::vector<int> n_new_for_intervals;
+        std::vector<double> q_j;
+        double R_0;
+        for (int i = 0; i < k_count_intervals + 1; i++)
+        {
+            n_new_for_intervals.push_back(0);
+            q_j.push_back(0);
+        }
+
+        for (int i = 0; i < k_count_intervals; i++)
+        {
+            dataGridView5->Rows[1]->Cells[i + 1]->Value = z_value_i[i];
+        }
+        dataGridView5->Rows[0]->Cells[1]->Value = k_count_intervals;
         
+        int z = 0;
+        for (size_t i = 0; i < z_value_i.size(); i++)
+        {
+            while (y_i[z] < z_value_i[i])
+            {
+                n_new_for_intervals[i] = n_new_for_intervals[i] + n_i[z];
+                z++;
+            }
+        }
+        while (z < y_i.size() && z_value_i[z_value_i.size() - 1] >= y_i[z])
+        {
+            n_new_for_intervals[n_new_for_intervals.size() - 1] = n_new_for_intervals[n_new_for_intervals.size() - 1] + n_i[z];
+            z++;
+        }
+
+        z = 0;
+        for (size_t i = 0; i < z_value_i.size(); i++)
+        {
+            while (y_i[z] < z_value_i[i])
+            {
+                q_j[i] = q_j[i] + p_i[z];
+                z++;
+            }
+        }
+        while (z < y_i.size() && z_value_i[z_value_i.size() - 1] >= y_i[z])
+        {
+            q_j[q_j.size() - 1] = q_j[q_j.size() - 1] + p_i[z];
+            z++;
+        }
+
+        for (int i = 0; i < k_count_intervals + 1; i++)
+        {
+            R_0 = R_0 + (n_new_for_intervals[i] - count_experement * q_j[i]) * (n_new_for_intervals[i] - count_experement * q_j[i]) / (count_experement * q_j[i]);
+        }
         
+
+        for (int i = 0; i < n_new_for_intervals.size(); i++)
+        {
+            dataGridView5->Rows[2]->Cells[i + 1]->Value = n_new_for_intervals[i];
+            dataGridView5->Rows[3]->Cells[i + 1]->Value = q_j[i];
+        }
+        dataGridView5->Rows[4]->Cells[1]->Value = R_0;
+
+
 
     }
     private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e)
@@ -755,9 +1048,24 @@ namespace Lab1
     }
     private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
     }
-private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
+    private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void chart2_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void dataGridView4_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+    }
+    
+    private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) 
+    {
+        button1_check = true;
+    }
+private: System::Void textBox6_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
-private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void textBox5_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void dataGridView5_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 }
 };
 }
