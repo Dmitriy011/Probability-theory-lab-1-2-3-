@@ -40,6 +40,18 @@ double combination(int n, int k)
     return factorial(n) / (factorial(n - k) * factorial(k));
 }
 
+double combination_2(int n, int k)
+{
+    double res = 1;
+    for (int i = 1; i <= k; i++)
+    {
+        res *= double(n) / double(i);
+        n--;
+    }
+
+    return res;
+}
+
 int experiment(int N, int M, int r)
 {
     int n = 0;
@@ -76,6 +88,41 @@ std::string type_SystemString_to_String(System::String^ text_syst)
     std::string text_str(cStr);
 
     return text_str;
+}
+
+double Gamma_func(double value)
+{
+    if (value == 1)
+    {
+        return value;
+    }
+    if (value == 0.5)
+    {
+        const double PI = 3.141592653589793;
+        return sqrt(PI);
+    }
+
+    return (value - 1) * Gamma_func(value - 1);
+}
+
+double integral_xhi_in_sqr(int r, double R0)
+{
+    int n = 100000;
+    double a = 0;
+    double b = R0;
+    double res = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        double x1 = a + (b - a) * double(i - 1) / double(n);
+        double gamma1 = Gamma_func(double(r) / 2);
+        double x2 = a + (b - a) * double(i) / double(n);
+
+        double g1 = pow(2, -double(r) / 2) * (1 / gamma1) * pow(x1, double(r) / 2 - 1) * std::exp(-x1 / 2);
+        double g2 = pow(2, -double(r) / 2) * (1 / gamma1) * pow(x2, double(r) / 2 - 1) * std::exp(-x2 / 2);
+        res += (g1 + g2) * double(b - a) / double(2 * n);
+    }
+
+    return res;
 }
 
 namespace Lab1
@@ -147,6 +194,12 @@ namespace Lab1
     private: System::Windows::Forms::TextBox^ textBox6;
     private: System::Windows::Forms::Button^ button1;
     private: System::Windows::Forms::DataGridView^ dataGridView5;
+    private: System::Windows::Forms::TextBox^ textBox7;
+    private: System::Windows::Forms::Label^ Alpha;
+    private: System::Windows::Forms::PictureBox^ pictureBox4;
+    private: System::Windows::Forms::Label^ label10;
+    private: System::Windows::Forms::PictureBox^ pictureBox5;
+    private: System::Windows::Forms::Label^ label11;
 
 
 
@@ -212,6 +265,12 @@ namespace Lab1
             this->textBox6 = (gcnew System::Windows::Forms::TextBox());
             this->button1 = (gcnew System::Windows::Forms::Button());
             this->dataGridView5 = (gcnew System::Windows::Forms::DataGridView());
+            this->textBox7 = (gcnew System::Windows::Forms::TextBox());
+            this->Alpha = (gcnew System::Windows::Forms::Label());
+            this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
+            this->label10 = (gcnew System::Windows::Forms::Label());
+            this->pictureBox5 = (gcnew System::Windows::Forms::PictureBox());
+            this->label11 = (gcnew System::Windows::Forms::Label());
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -223,6 +282,8 @@ namespace Lab1
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart3))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView4))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView5))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->BeginInit();
             this->SuspendLayout();
             // 
             // button2
@@ -422,7 +483,7 @@ namespace Lab1
             this->chart1->Cursor = System::Windows::Forms::Cursors::Default;
             legend1->Name = L"Legend1";
             this->chart1->Legends->Add(legend1);
-            this->chart1->Location = System::Drawing::Point(591, 636);
+            this->chart1->Location = System::Drawing::Point(12, 626);
             this->chart1->Name = L"chart1";
             this->chart1->Palette = System::Windows::Forms::DataVisualization::Charting::ChartColorPalette::Bright;
             series1->BorderWidth = 2;
@@ -438,7 +499,7 @@ namespace Lab1
             series2->Name = L"Fη(x)^";
             this->chart1->Series->Add(series1);
             this->chart1->Series->Add(series2);
-            this->chart1->Size = System::Drawing::Size(251, 230);
+            this->chart1->Size = System::Drawing::Size(830, 252);
             this->chart1->TabIndex = 19;
             this->chart1->Text = L"chart1";
             this->chart1->Click += gcnew System::EventHandler(this, &MyForm::chart1_Click);
@@ -469,7 +530,7 @@ namespace Lab1
             this->chart2->Cursor = System::Windows::Forms::Cursors::Default;
             legend2->Name = L"Legend1";
             this->chart2->Legends->Add(legend2);
-            this->chart2->Location = System::Drawing::Point(12, 636);
+            this->chart2->Location = System::Drawing::Point(865, 100);
             this->chart2->Name = L"chart2";
             this->chart2->Palette = System::Windows::Forms::DataVisualization::Charting::ChartColorPalette::Bright;
             series3->BorderWidth = 2;
@@ -479,7 +540,7 @@ namespace Lab1
             series3->Legend = L"Legend1";
             series3->Name = L"Fη(x)";
             this->chart2->Series->Add(series3);
-            this->chart2->Size = System::Drawing::Size(251, 230);
+            this->chart2->Size = System::Drawing::Size(204, 185);
             this->chart2->TabIndex = 22;
             this->chart2->Text = L"chart2";
             this->chart2->Click += gcnew System::EventHandler(this, &MyForm::chart2_Click);
@@ -491,7 +552,7 @@ namespace Lab1
             this->chart3->Cursor = System::Windows::Forms::Cursors::Default;
             legend3->Name = L"Legend1";
             this->chart3->Legends->Add(legend3);
-            this->chart3->Location = System::Drawing::Point(296, 636);
+            this->chart3->Location = System::Drawing::Point(865, 301);
             this->chart3->Name = L"chart3";
             series4->ChartArea = L"ChartArea1";
             series4->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::StepLine;
@@ -499,14 +560,14 @@ namespace Lab1
             series4->Legend = L"Legend1";
             series4->Name = L"Fη(x)^";
             this->chart3->Series->Add(series4);
-            this->chart3->Size = System::Drawing::Size(251, 230);
+            this->chart3->Size = System::Drawing::Size(204, 184);
             this->chart3->TabIndex = 23;
             this->chart3->Text = L"chart3";
             // 
             // dataGridView4
             // 
             this->dataGridView4->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-            this->dataGridView4->Location = System::Drawing::Point(12, 886);
+            this->dataGridView4->Location = System::Drawing::Point(12, 894);
             this->dataGridView4->Name = L"dataGridView4";
             this->dataGridView4->Size = System::Drawing::Size(535, 106);
             this->dataGridView4->TabIndex = 24;
@@ -515,7 +576,7 @@ namespace Lab1
             // label8
             // 
             this->label8->AutoSize = true;
-            this->label8->Location = System::Drawing::Point(1073, 572);
+            this->label8->Location = System::Drawing::Point(1083, 505);
             this->label8->Name = L"label8";
             this->label8->Size = System::Drawing::Size(78, 13);
             this->label8->TabIndex = 25;
@@ -523,7 +584,7 @@ namespace Lab1
             // 
             // textBox5
             // 
-            this->textBox5->Location = System::Drawing::Point(1076, 588);
+            this->textBox5->Location = System::Drawing::Point(1086, 521);
             this->textBox5->Name = L"textBox5";
             this->textBox5->Size = System::Drawing::Size(118, 20);
             this->textBox5->TabIndex = 26;
@@ -533,7 +594,7 @@ namespace Lab1
             // label9
             // 
             this->label9->AutoSize = true;
-            this->label9->Location = System::Drawing::Point(1073, 623);
+            this->label9->Location = System::Drawing::Point(1084, 584);
             this->label9->Name = L"label9";
             this->label9->Size = System::Drawing::Size(65, 13);
             this->label9->TabIndex = 27;
@@ -541,7 +602,7 @@ namespace Lab1
             // 
             // textBox6
             // 
-            this->textBox6->Location = System::Drawing::Point(1076, 639);
+            this->textBox6->Location = System::Drawing::Point(1087, 600);
             this->textBox6->Name = L"textBox6";
             this->textBox6->Size = System::Drawing::Size(118, 20);
             this->textBox6->TabIndex = 28;
@@ -550,7 +611,7 @@ namespace Lab1
             // 
             // button1
             // 
-            this->button1->Location = System::Drawing::Point(1075, 665);
+            this->button1->Location = System::Drawing::Point(1086, 626);
             this->button1->Name = L"button1";
             this->button1->Size = System::Drawing::Size(119, 19);
             this->button1->TabIndex = 29;
@@ -561,17 +622,74 @@ namespace Lab1
             // dataGridView5
             // 
             this->dataGridView5->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-            this->dataGridView5->Location = System::Drawing::Point(1076, 704);
+            this->dataGridView5->Location = System::Drawing::Point(1085, 661);
             this->dataGridView5->Name = L"dataGridView5";
             this->dataGridView5->Size = System::Drawing::Size(535, 149);
             this->dataGridView5->TabIndex = 30;
             this->dataGridView5->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView5_CellContentClick);
+            // 
+            // textBox7
+            // 
+            this->textBox7->Location = System::Drawing::Point(1087, 560);
+            this->textBox7->Name = L"textBox7";
+            this->textBox7->Size = System::Drawing::Size(118, 20);
+            this->textBox7->TabIndex = 32;
+            this->textBox7->Text = L"0.45";
+            // 
+            // Alpha
+            // 
+            this->Alpha->AutoSize = true;
+            this->Alpha->Location = System::Drawing::Point(1084, 544);
+            this->Alpha->Name = L"Alpha";
+            this->Alpha->Size = System::Drawing::Size(34, 13);
+            this->Alpha->TabIndex = 31;
+            this->Alpha->Text = L"Alpha";
+            // 
+            // pictureBox4
+            // 
+            this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
+            this->pictureBox4->Location = System::Drawing::Point(1087, 818);
+            this->pictureBox4->Name = L"pictureBox4";
+            this->pictureBox4->Size = System::Drawing::Size(293, 60);
+            this->pictureBox4->TabIndex = 33;
+            this->pictureBox4->TabStop = false;
+            // 
+            // label10
+            // 
+            this->label10->AutoSize = true;
+            this->label10->Location = System::Drawing::Point(1386, 842);
+            this->label10->Name = L"label10";
+            this->label10->Size = System::Drawing::Size(0, 13);
+            this->label10->TabIndex = 34;
+            // 
+            // pictureBox5
+            // 
+            this->pictureBox5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox5.Image")));
+            this->pictureBox5->Location = System::Drawing::Point(553, 919);
+            this->pictureBox5->Name = L"pictureBox5";
+            this->pictureBox5->Size = System::Drawing::Size(293, 60);
+            this->pictureBox5->TabIndex = 35;
+            this->pictureBox5->TabStop = false;
+            // 
+            // label11
+            // 
+            this->label11->AutoSize = true;
+            this->label11->Location = System::Drawing::Point(718, 930);
+            this->label11->Name = L"label11";
+            this->label11->Size = System::Drawing::Size(0, 13);
+            this->label11->TabIndex = 36;
             // 
             // MyForm
             // 
             this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
             this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
             this->ClientSize = System::Drawing::Size(1924, 1061);
+            this->Controls->Add(this->label11);
+            this->Controls->Add(this->pictureBox5);
+            this->Controls->Add(this->label10);
+            this->Controls->Add(this->pictureBox4);
+            this->Controls->Add(this->textBox7);
+            this->Controls->Add(this->Alpha);
             this->Controls->Add(this->dataGridView5);
             this->Controls->Add(this->button1);
             this->Controls->Add(this->textBox6);
@@ -614,6 +732,8 @@ namespace Lab1
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart3))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView4))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView5))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->EndInit();
             this->ResumeLayout(false);
             this->PerformLayout();
 
@@ -746,8 +866,8 @@ namespace Lab1
         for (size_t i = min_y_i; i <= max_y_i; i++)
         {
             //p_i т3,л2
-            p_i.push_back(combination(M, i) * combination(N - M, r - i) / combination(N, r));
-            dataGridView3->Rows[2]->Cells[k]->Value = combination(M, i) * combination(N - M, r - i) / combination(N, r);
+            p_i.push_back(combination_2(M, i) * combination_2(N - M, r - i) / combination_2(N, r));
+            dataGridView3->Rows[2]->Cells[k]->Value = combination_2(M, i) * combination_2(N - M, r - i) / combination_2(N, r);
             k++;
 
             //создание n_i vec для т1,л1
@@ -893,6 +1013,7 @@ namespace Lab1
         dataGridView4->Rows[1]->Cells[0]->Value = "F_selection";
         dataGridView4->Rows[2]->Cells[0]->Value = "difference";
 
+        double max_difference_F_and_F_selection = 0;
         for (int i = 1; i < F_theory.size(); i++)
         {
             dataGridView4->Columns[i]->Width = 70;
@@ -900,6 +1021,17 @@ namespace Lab1
             dataGridView4->Rows[1]->Cells[i]->Value = F_selection[i];
             dataGridView4->Rows[2]->Cells[i]->Value = abs(F_selection[i] - F_theory[i]);
         }
+
+        double max_difference_F_theory_and_F_selection = 0;
+        for (int i = 1; i < F_theory.size(); i++)
+        {
+            if (abs(F_selection[i] - F_theory[i]) > max_difference_F_theory_and_F_selection)
+            {
+                max_difference_F_theory_and_F_selection = abs(F_selection[i] - F_theory[i]);
+            }
+        }
+        label11->Text = max_difference_F_theory_and_F_selection.ToString();
+
         
         for (int i = 0; i < F_theory.size(); i++)
         {
@@ -923,39 +1055,46 @@ namespace Lab1
         std::vector<int> z_value_i;
         int checked_count_click = 0;
         //создание табл5 (л3)
-        dataGridView5->RowCount = 5;
+        dataGridView5->RowCount = 8;
         dataGridView5->ColumnCount = k_count_intervals + 2;
         dataGridView5->Rows[0]->Cells[0]->Value = "k";
         dataGridView5->Rows[1]->Cells[0]->Value = "intervals";
         dataGridView5->Rows[2]->Cells[0]->Value = "n_new_for_intervals";
         dataGridView5->Rows[3]->Cells[0]->Value = "q_j";
-        dataGridView5->Rows[4]->Cells[0]->Value = "R0";
+        dataGridView5->Rows[4]->Cells[0]->Value = "R0_i";
+        dataGridView5->Rows[5]->Cells[0]->Value = "R0";
+        dataGridView5->Rows[6]->Cells[0]->Value = "F with dash";
+        dataGridView5->Rows[7]->Cells[0]->Value = "alpha";
         for (int i = 0; i < k_count_intervals  +1; i++)
         {
             dataGridView5->Columns[i]->Width = 70;
         }
 
-        String^ tmp_text;
+        double alpha = 0.0;
+
+        String^ tmp_text1_for_intervals;
         string cur_value_str = "";
+        String^ tmp_text2_for_aplha;
         if (button1_check)
         {
-            tmp_text = textBox6->Text;
-            std::string text_str = type_SystemString_to_String(tmp_text);
+            tmp_text1_for_intervals = textBox6->Text;
+            std::string text_str1_for_intervals = type_SystemString_to_String(tmp_text1_for_intervals);
+            
+            tmp_text2_for_aplha = textBox7->Text;
+            std::string text_str2_for_alpha = type_SystemString_to_String(tmp_text2_for_aplha);
+            alpha = atof(text_str2_for_alpha.c_str());
 
-            for (int i = 0; i < text_str.size(); i++)
+            for (int i = 0; i < text_str1_for_intervals.size(); i++)
             {
-                while (text_str[i] != ';')
+                while (text_str1_for_intervals[i] != ';')
                 {
-                    cur_value_str += text_str[i];
+                    cur_value_str += text_str1_for_intervals[i];
                     i++;
                 }
 
                 z_value_i.push_back(std::stoi(cur_value_str));
                 cur_value_str = "";
             }
-             
-            //count_tap++;
-            //dataGridView5->Rows[1]->Cells[count_tap]->Value = z_value_i[0];
         }
 
         std::vector<int> n_new_for_intervals;
@@ -1003,20 +1142,43 @@ namespace Lab1
             z++;
         }
 
+        std::vector<double> R_0_i;
         for (int i = 0; i < k_count_intervals + 1; i++)
         {
-            R_0 = R_0 + (n_new_for_intervals[i] - count_experement * q_j[i]) * (n_new_for_intervals[i] - count_experement * q_j[i]) / (count_experement * q_j[i]);
+            R_0_i.push_back(0);
+        }
+        for (int i = 0; i < k_count_intervals + 1; i++)
+        {
+            R_0_i[i] = (n_new_for_intervals[i] - count_experement * q_j[i]) * (n_new_for_intervals[i] - count_experement * q_j[i]) / (count_experement * q_j[i]);
+        }
+
+        double R0;
+        for (int i = 0; i < k_count_intervals + 1; i++)
+        {
+            R0 += (n_new_for_intervals[i] - count_experement * q_j[i]) * (n_new_for_intervals[i] - count_experement * q_j[i]) / (count_experement * q_j[i]);
         }
         
+        double F_with_dash;
+        F_with_dash = (1 - integral_xhi_in_sqr(k_count_intervals + 1, R0));
 
         for (int i = 0; i < n_new_for_intervals.size(); i++)
         {
             dataGridView5->Rows[2]->Cells[i + 1]->Value = n_new_for_intervals[i];
             dataGridView5->Rows[3]->Cells[i + 1]->Value = q_j[i];
+            dataGridView5->Rows[4]->Cells[i+1]->Value = R_0_i[i];
         }
-        dataGridView5->Rows[4]->Cells[1]->Value = R_0;
+        dataGridView5->Rows[5]->Cells[1]->Value = R0;
+        dataGridView5->Rows[6]->Cells[1]->Value = F_with_dash;
+        dataGridView5->Rows[7]->Cells[1]->Value = alpha;
 
-
+        if (F_with_dash > alpha)
+        {
+            label10->Text = "Yes";
+        }
+        else
+        {
+            label10->Text = "No";
+        }
 
     }
     private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e)
