@@ -1,3 +1,0 @@
-D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\x64\Debug\Lab1.vcxprojAssemblyReference.cache
-D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\x64\Debug\Lab1.MyForm.resources
-D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\x64\Debug\Lab1.vcxproj.GenerateResource.cache
