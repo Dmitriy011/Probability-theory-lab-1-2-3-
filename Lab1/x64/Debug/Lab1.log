@@ -1,0 +1,55 @@
+﻿  MyForm.cpp
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(86,23): warning C4477: "sprintf": в строке форматирования "%s" требуется аргумент типа "char *", но вариативный аргумент "1" имеет тип "System::String ^"
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(86,9): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(790,19): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(912,1): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(913,1): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1003,19): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1021,26): warning C4244: аргумент: преобразование "double" в "const unsigned __int64", возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1027,62): warning C4244: аргумент: преобразование "double" в "const unsigned __int64", возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1028,58): warning C4244: аргумент: преобразование "double" в "const unsigned __int64", возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1030,62): warning C4244: аргумент: преобразование "double" в "const unsigned __int64", возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1031,58): warning C4244: аргумент: преобразование "double" в "const unsigned __int64", возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1054,1): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1164,1): warning C4244: +=: преобразование "_Ty" в "_Ty", возможна потеря данных
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Ty=int
+          ]
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1167,1): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1171,119): warning C4244: =: преобразование "_Ty" в "_Ty", возможна потеря данных
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Ty=int
+          ]
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1263,1): warning C4244: +=: преобразование "_Ty" в "_Ty", возможна потеря данных
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Ty=int
+          ]
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1266,1): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1270,123): warning C4244: =: преобразование "_Ty" в "_Ty", возможна потеря данных
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Ty=int
+          ]
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1145,16): warning C4101: R_0: неиспользованная локальная переменная
+D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\Lab1\MyForm.h(1203): warning C4700: использована неинициализированная локальная переменная "R0"
+  MyForm.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
+  Lab1.vcxproj -> D:\Учеба\Теория вероятности\Лаб 6 семестр\Probability-theory-lab-1-2-3-\x64\Debug\Lab1.exe
