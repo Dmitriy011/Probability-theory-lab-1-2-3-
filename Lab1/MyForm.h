@@ -610,7 +610,7 @@ namespace Lab1
                this->textBox6->Name = L"textBox6";
                this->textBox6->Size = System::Drawing::Size(118, 20);
                this->textBox6->TabIndex = 28;
-               this->textBox6->Text = L"2;4;5;";
+               this->textBox6->Text = L"3;4;5;";
                this->textBox6->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox6_TextChanged);
                // 
                // button1
@@ -1173,6 +1173,10 @@ namespace Lab1
         }
 
         z = 0;
+        for (int g = 0; g < q_j.size(); g++)
+        {
+            q_j[g] = 0;
+        }
         for (size_t i = 0; i < z_value_i.size(); i++)
         {
             while (y_i[z] < z_value_i[i])
@@ -1181,7 +1185,7 @@ namespace Lab1
                 z++;
             }
         }
-        while (z < y_i.size() && z_value_i[z_value_i.size() - 1] >= y_i[z])
+        while (z < y_i.size() && z_value_i[z_value_i.size() - 1] <= y_i[z])
         {
             q_j[q_j.size() - 1] = q_j[q_j.size() - 1] + p_i[z];
             z++;
@@ -1271,20 +1275,22 @@ namespace Lab1
                 z++;
             }
 
-            z = 0;
             for (int g = 0; g < q_j.size(); g++)
             {
                 q_j[g] = 0;
             }
+            z = 0;
+            checker_last_i = 0;
             for (size_t i = 0; i < z_value_i.size(); i++)
             {
                 while (y_i[z] < z_value_i[i])
                 {
-                    q_j[i] = q_j[i] + p_i[z];
+                    q_j[i] += p_i[z];
                     z++;
                 }
+                checker_last_i = i;
             }
-            while (z < y_i.size() && z_value_i[z_value_i.size() - 1] >= y_i[z])
+            while (z < y_i.size() && z_value_i[checker_last_i] <= y_i[z])
             {
                 q_j[q_j.size() - 1] = q_j[q_j.size() - 1] + p_i[z];
                 z++;
@@ -1297,7 +1303,7 @@ namespace Lab1
             }
 
             F_with_dash = 0;
-            F_with_dash = (1 - integral_xhi_in_sqr(k_count_intervals + 1, R0));
+            F_with_dash = (1 - integral_xhi_in_sqr(k_count_intervals, R0));
 
             if (F_with_dash > alpha)
             {
